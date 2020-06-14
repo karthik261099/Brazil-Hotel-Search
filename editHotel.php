@@ -9,6 +9,7 @@ include 'db.php';
 $link=mysqli_connect($servername,$username,$password,$dbname);
 
 $updateSuccessful=0;
+$deleteSuccessful=0;
 if(isset($_POST['submitted'])){
 
   $query="UPDATE hotels SET location='".$_POST['newLocation']."' , hotelName='".$_POST['newHotelName']."' , affiliateurl='".$_POST['newAffiliateUrl']."' WHERE id=".$_GET['hotelId'];
@@ -56,7 +57,7 @@ if(isset($_POST['submitted'])){
       //echo "Sorry, your file was not uploaded.";
     // if everything is ok, try to upload file
     } else {
-      $fileName=$_GET['hotelId']."-".basename($_FILES["fileToUpload"]["name"]);
+      $fileName=time()."-".basename($_FILES["fileToUpload"]["name"]);
       $finalFileLocation=$target_dir.$fileName;
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $finalFileLocation)) {
         //echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
@@ -74,8 +75,18 @@ if(isset($_POST['submitted'])){
     }
 }
 
+}
 
+if(isset($_POST['deleted'])){
 
+  $query="DELETE FROM hotels WHERE id=".$_GET['hotelId'];
+
+  if(mysqli_query($link,$query)){
+    //SUCCESSFULLY ADDED AFFILIATE URL
+    $deleteSuccessful=1;
+  }
+
+  
 }
 
 
@@ -138,64 +149,81 @@ if(isset($_POST['submitted'])){
           </div>
           ';
         }
+        if($deleteSuccessful==1){
+          echo '
+          <div class="alert alert-danger" role="alert">
+            <b>Deleted Successfully!</b>
+          </div>
+          ';
+        }
 
         $hotelId=$_GET['hotelId'];
 
         $query="SELECT * FROM hotels WHERE id=".$hotelId;
         $result=mysqli_query($link,$query);
 
-        $row=mysqli_fetch_array($result);
+        //$row=mysqli_fetch_array($result);
 
-        echo'
+        if($row=mysqli_fetch_array($result)){
+          echo'
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><b>Hotel ID</b></span>
-            <span class="input-group-text"><b>'.$row['id'].'</b></span>
-          </div>
-        </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><b>Hotel ID</b></span>
+                <span class="input-group-text"><b>'.$row['id'].'</b></span>
+                <input type="hidden" name="hotelId" value="'.$row['id'].'">
+              </div>
+            </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"><b>Hotel Location</b></span>
-          </div>
-          <input type="text" class="form-control" placeholder="Hotel Location" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newLocation" value="'.$row['location'].'">
-        </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Hotel Location</b></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Hotel Location" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newLocation" value="'.$row['location'].'">
+            </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"><b>Hotel Name</b></span>
-          </div>
-          <input type="text" class="form-control" placeholder="Hotel Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newHotelName" value="'.$row['hotelName'].'">
-        </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Hotel Name</b></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Hotel Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newHotelName" value="'.$row['hotelName'].'">
+            </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"><b>Affiliate URL</b></span>
-          </div>
-          <input type="text" class="form-control" placeholder="Affiliate URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newAffiliateUrl" value="'.$row['affiliateurl'].'">
-        </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Affiliate URL</b></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Affiliate URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newAffiliateUrl" value="'.$row['affiliateurl'].'">
+            </div>
 
-        <div class="card">
-          <img src="imagesHotels/'.$row['imgUrl'].'" class="card-img-top" alt="Image not Available. Please Upload">
-          <div class="card-body">
-            <p class="card-text">'.$row['imgUrl'].'</p>
-            <input type="file" name="fileToUpload" id="fileToUpload">
-          </div>
-        </div>
-
-
-
-        <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="UPDATE">
+            <div class="card">
+              <img src="imagesHotels/'.$row['imgUrl'].'" class="card-img-top" alt="Image not Available. Please Upload">
+              <div class="card-body">
+                <p class="card-text">'.$row['imgUrl'].'</p>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+              </div>
+            </div>
 
 
-        ';
+
+            <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="UPDATE">
+
+            <br>
+
+            <input type="submit" class="btn btn-outline-danger" style="margin-top:5px;" name="deleted" value="DELETE">
+
+            ';
+        } 
 
 
       ?>
-    
+
 
     </div>
+</form>
+
+<form>
+  
 </form>
 
  <!-- jQuery CDN - Slim version (=without AJAX) -->

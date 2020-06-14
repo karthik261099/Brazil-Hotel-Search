@@ -48,14 +48,36 @@
 	
 	<div class="col-lg-6 col-md-12 col-sm-12">
 
-		<form method="GET" action="search.html" id="searchForm">
+		<form method="GET" action="search.php" id="searchForm">
 			<div class="card" style="margin-top: 10px;">
 			  <div class="card-body" style="text-align: center;">
 			    <div class="form-group">
 			    	<input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area" autocomplete="off">
 
 			    	<ul class="list-group hide" id="countryList" style="margin-top: 5px;">
-					    <li class="list-group-item"><b>Mumbai</b></li>
+			    		<?php
+
+			        		include 'db.php';
+			        		$link=mysqli_connect($servername,$username,$password,$dbname);
+
+			        		  if(mysqli_connect_error()){
+						        echo "There was an error connecting to DB!";
+						      }else{
+						      //connected to db successfully
+
+						        $query="SELECT DISTINCT location FROM hotels";
+
+						        $result=mysqli_query($link,$query);
+
+						        while ($row=mysqli_fetch_array($result)) {
+						        	echo '
+						        		<li class="list-group-item"><b>'.$row['location'].'</b></li>
+						        	';
+						        }
+						    }
+
+			        	?>
+					    <!-- <li class="list-group-item"><b>Mumbai</b></li>
 					    <li class="list-group-item"><b>Indore</b></li>
 					    <li class="list-group-item"><b>Chennai</b></li>
 					    <li class="list-group-item"><b>Delhi</b></li>
@@ -67,7 +89,7 @@
 					    <li class="list-group-item"><b>Delhi</b></li>
 					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
 					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
+					    <li class="list-group-item"><b>Rio de Janeiro</b></li> -->
 					</ul> 
 
 		    	</div>
@@ -79,42 +101,49 @@
 		<div class="card" style="margin-top: 10px;">
 
 			<div class="row" style="padding-top: 10px; padding-right: 20px;padding-left: 20px; padding-bottom: 20px;">
-				<div class="col-lg-6 col-md-12 col-sm-12">
+
+				<?php
+
+	        		include 'db.php';
+	        		$link=mysqli_connect($servername,$username,$password,$dbname);
+
+	        		  if(mysqli_connect_error()){
+				        echo "There was an error connecting to DB!";
+				      }else{
+				      //connected to db successfully
+
+				        $query="SELECT * FROM hotels WHERE location LIKE '%".$_GET['location']."%'";
+
+				        $result=mysqli_query($link,$query);
+
+				        while ($row=mysqli_fetch_array($result)) {
+				        	echo '
+				        		<div class="col-lg-6 col-md-12 col-sm-12">
+				        			<a href="'.$row['affiliateurl'].'" target="_blank">
+										<div class="card hotelCard" style="margin-top: 15px;">
+										  <img src="imagesHotels/'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
+										  <div class="card-img-overlay" >
+										    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>'.$row['hotelName'].'</b></h5>
+										  </div>
+										</div>
+									</a>
+								</div>
+				        	';
+				        }
+				    }
+
+	        	?>
+
+				<!-- <div class="col-lg-6 col-md-12 col-sm-12">
+					<a href="">
 					<div class="card hotelCard" style="margin-top: 15px;">
 					  <img src="https://k6u8v6y8.stackpathcdn.com/blog/wp-content/uploads/2014/05/Luxury-Hotels-in-India.jpg" class="card-img" alt="...">
 					  <div class="card-img-overlay" >
 					    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>Hotel name</b></h5>
-					    <h5 class="card-title" style="color: white; margin-top: 2px;"><b>$400</b></h5>
 					  </div>
 					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 col-sm-12">
-					<div class="card hotelCard" style="margin-top: 15px;">
-					  <img src="https://k6u8v6y8.stackpathcdn.com/blog/wp-content/uploads/2014/05/Luxury-Hotels-in-India.jpg" class="card-img" alt="...">
-					  <div class="card-img-overlay" >
-					    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>Hotel name</b></h5>
-					    <h5 class="card-title" style="color: white; margin-top: 2px;"><b>$400</b></h5>
-					  </div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 col-sm-12">
-					<div class="card hotelCard" style="margin-top: 15px;">
-					  <img src="https://k6u8v6y8.stackpathcdn.com/blog/wp-content/uploads/2014/05/Luxury-Hotels-in-India.jpg" class="card-img" alt="...">
-					  <div class="card-img-overlay" >
-					    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>Hotel name</b></h5>
-					    <h5 class="card-title" style="color: white; margin-top: 2px;"><b>$400</b></h5>
-					  </div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 col-sm-12">
-					<div class="card hotelCard" style="margin-top: 15px;">
-					  <img src="https://k6u8v6y8.stackpathcdn.com/blog/wp-content/uploads/2014/05/Luxury-Hotels-in-India.jpg" class="card-img" alt="...">
-					  <div class="card-img-overlay" >
-					    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>Hotel name</b></h5>
-					    <h5 class="card-title" style="color: white; margin-top: 2px;"><b>$400</b></h5>
-					  </div>
-					</div>
-				</div>
+					</a>
+				</div> -->
 
 
 			</div>

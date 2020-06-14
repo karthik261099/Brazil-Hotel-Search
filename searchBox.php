@@ -28,7 +28,30 @@
 		        autocomplete="off">
 
 		        <ul class="list-group hide" id="countryList" style="margin-top: 5px;">
-				    <li class="list-group-item"><b>Mumbai</b></li>
+		        	<?php
+
+		        		include 'db.php';
+		        		$link=mysqli_connect($servername,$username,$password,$dbname);
+
+		        		  if(mysqli_connect_error()){
+					        echo "There was an error connecting to DB!";
+					      }else{
+					      //connected to db successfully
+
+					        $query="SELECT DISTINCT location FROM hotels";
+
+					        $result=mysqli_query($link,$query);
+
+					        while ($row=mysqli_fetch_array($result)) {
+					        	echo '
+					        		<li class="list-group-item"><b>'.$row['location'].'</b></li>
+					        	';
+					        }
+					    }
+
+
+		        	?>
+				    <!-- <li class="list-group-item"><b>Mumbai</b></li>
 				    <li class="list-group-item"><b>Indore</b></li>
 				    <li class="list-group-item"><b>Chennai</b></li>
 				    <li class="list-group-item"><b>Delhi</b></li>
@@ -40,7 +63,7 @@
 				    <li class="list-group-item"><b>Delhi</b></li>
 				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
 				    <li class="list-group-item"><b>Delhi</b></li>
-				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
+				    <li class="list-group-item"><b>Rio de Janeiro</b></li> -->
 				</ul> 
 
 		    </div>

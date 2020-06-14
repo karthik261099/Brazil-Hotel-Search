@@ -48,18 +48,18 @@ if(isset($_POST['submitted'])){
       //echo "Sorry, your file was not uploaded.";
     // if everything is ok, try to upload file
     } else {
-      $maxId=0;
-      $query1="SELECT MAX(id) as maxId FROM hotels";
-      if($result=mysqli_query($link,$query1)){
-        //SUCCESSFULLY ADDED AFFILIATE URL
-        $row=mysqli_fetch_array($result);
-        $maxId=$row['maxId'];
-      }else{
-        $maxId=0;
-      }
-      $maxId=$maxId+1;
+      // $maxId=0;
+      // $query1="SELECT MAX(id) as maxId FROM hotels";
+      // if($result=mysqli_query($link,$query1)){
+      //   //SUCCESSFULLY ADDED AFFILIATE URL
+      //   $row=mysqli_fetch_array($result);
+      //   $maxId=$row['maxId'];
+      // }else{
+      //   $maxId=0;
+      // }
+      // $maxId=$maxId+1;
 
-      $fileName=$maxId."-".basename($_FILES["fileToUpload"]["name"]);
+      $fileName=time()."-".basename($_FILES["fileToUpload"]["name"]);
       $finalFileLocation=$target_dir.$fileName;
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $finalFileLocation)) {
         //echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
@@ -173,7 +173,7 @@ if(isset($_POST['submitted'])){
         </div>
       </div>
 
-      <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="UPDATE">
+      <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="ADD">
     
     </div>
 </form>
