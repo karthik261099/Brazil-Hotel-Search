@@ -19,6 +19,7 @@
     		transform: scale(1.04);
     		transition: all 0.5s;
     	}
+
     </style>
 </head>
 <body background="https://i1.wp.com/brazilbeyondrio.com/wp-content/uploads/2018/07/pedro-menezes-513074-unsplash-e1554601699844.jpg?resize=1500%2C1080&ssl=1">
@@ -42,7 +43,9 @@
 
 <div class="row" style="margin: 20px;">
 
-	<div class="col-lg-6 col-md-12 col-sm-12">
+	<div class="col-lg-6 col-md-12 col-sm-12" style="">
+
+        <div id="googleMap" style="width:100%;height:94vh;border: 5px white solid;"></div>
 		
 	</div>
 	
@@ -177,8 +180,114 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-<script>
+<!-- <script>
+var map;
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(-33.890542,151.274856),
+  zoom:12,
+};
+map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+TestMarker();
+}
 
+var locations = [
+  ['Bondi Beach', -33.890542, 151.274856, 4],
+  ['Coogee Beach', -33.923036, 151.259052, 5],
+  ['Cronulla Beach', -34.028249, 151.157507, 3],
+  ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+  ['Maroubra Beach', -33.950198, 151.259302, 1]
+];
+
+var marker;
+ for (i = 0; i < locations.length; i++) {  
+  marker = new google.maps.Marker({
+    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+    map: map
+  });
+
+// Function for adding a marker to the page.
+function addMarker(location) {
+    marker = new google.maps.Marker({
+        position: location,
+        label: {
+          text: "ABCD",
+          color: "#ffffff",
+          fontWeight: "bold"
+        },
+        map: map
+    },{
+        position: location,
+        label: {
+          text: "sssss",
+          color: "#ffffff",
+          fontWeight: "bold"
+        },
+        map: map
+    });
+}
+
+// Testing the addMarker function
+function TestMarker() {
+   CentralPark = new google.maps.LatLng(19.076090,  72.877426);
+   addMarker(CentralPark);
+}
+</script> -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIX2aNMeU2L003GB4g7vqX0CsQQUox10g&callback=myMap"></script>
+<!-- <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script> -->
+
+<script type="text/javascript">
+    var locations = [
+    <?php
+    $query="SELECT * FROM hotels WHERE location LIKE '%".$_GET['location']."%'";
+
+    $result=mysqli_query($link,$query);
+
+    while ($row=mysqli_fetch_array($result)) {
+
+        echo'
+            [\''.$row['hotelName'].'\', '.$row['locationLatitude'].', '.$row['locationLongitude'].'],
+        ';
+    }
+
+    ?>
+    ];
+
+    var map = new google.maps.Map(document.getElementById('googleMap'), {
+      zoom: 10,
+      center: new google.maps.LatLng(locations[0][1], locations[0][2]),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        label: {
+          text: locations[i][0],
+          color: "#ffffff",
+          fontWeight: "bold"
+        },
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+</script>
+
+
+
+
+<script>
 $(document).ready(function(){
 
 	$("#searchBox").on("keyup", function() {

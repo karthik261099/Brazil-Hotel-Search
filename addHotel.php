@@ -64,7 +64,7 @@ if(isset($_POST['submitted'])){
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $finalFileLocation)) {
         //echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 
-        $query="INSERT INTO `hotels`(`hotelName`, `location`, `affiliateurl`, `imgUrl`) VALUES ('".$_POST['newHotelName']."','".$_POST['newLocation']."','".$_POST['newAffiliateUrl']."','".$fileName."')";
+        $query="INSERT INTO `hotels`(`hotelName`, `location`, `affiliateurl`, `imgUrl`,`locationLatitude`, `locationLongitude`) VALUES ('".$_POST['newHotelName']."','".$_POST['newLocation']."','".$_POST['newAffiliateUrl']."','".$fileName."',".$_POST['locationLatitude'].",".$_POST['locationLongitude'].")";
 
         if(mysqli_query($link,$query)){
           //SUCCESSFULLY ADDED AFFILIATE URL
@@ -164,6 +164,20 @@ if(isset($_POST['submitted'])){
           <span class="input-group-text" id="basic-addon1"><b>Affiliate URL</b></span>
         </div>
         <input type="text" class="form-control" placeholder="Affiliate URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newAffiliateUrl" required="true">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><b>Location Latitude</b></span>
+        </div>
+        <input type="number" class="form-control" placeholder="Location Latitude" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="locationLatitude" required="true" step="0.000001">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><b>Location Longitude</b></span>
+        </div>
+        <input type="number" class="form-control" placeholder="Location Longitude" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="locationLongitude" required="true" step="0.000001">
       </div>
 
       <div class="card">

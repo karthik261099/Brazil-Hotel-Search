@@ -12,7 +12,7 @@ $updateSuccessful=0;
 $deleteSuccessful=0;
 if(isset($_POST['submitted'])){
 
-  $query="UPDATE hotels SET location='".$_POST['newLocation']."' , hotelName='".$_POST['newHotelName']."' , affiliateurl='".$_POST['newAffiliateUrl']."' WHERE id=".$_GET['hotelId'];
+  $query="UPDATE hotels SET location='".$_POST['newLocation']."' , hotelName='".$_POST['newHotelName']."' , affiliateurl='".$_POST['newAffiliateUrl']."', locationLatitude=".$_POST['locationLatitude'].", locationLongitude=".$_POST['locationLongitude']." WHERE id=".$_GET['hotelId'];
 
   if(mysqli_query($link,$query)){
     //SUCCESSFULLY ADDED AFFILIATE URL
@@ -194,6 +194,20 @@ if(isset($_POST['deleted'])){
                 <span class="input-group-text" id="basic-addon1"><b>Affiliate URL</b></span>
               </div>
               <input type="text" class="form-control" placeholder="Affiliate URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newAffiliateUrl" value="'.$row['affiliateurl'].'">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Location Latitude</b></span>
+              </div>
+              <input type="number" class="form-control" placeholder="Location Latitude" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="locationLatitude" required="true" step="0.000001" value="'.$row['locationLatitude'].'">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Location Longitude</b></span>
+              </div>
+              <input type="number" class="form-control" placeholder="Location Longitude" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="locationLongitude" required="true" step="0.000001" value="'.$row['locationLongitude'].'">
             </div>
 
             <div class="card">

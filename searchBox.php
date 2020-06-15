@@ -14,6 +14,58 @@
     		background: #007bff;
     		color: white;
     	}
+
+
+		input[type=date] {
+		  height: 35px;
+		  margin: 0 auto;
+		  width: 100%;
+		  font-family: arial, sans-serif;
+		  font-size: 18px;
+		  font-weight: bold;
+		  text-transform: uppercase;
+		  background-color: white;
+		  outline: none;
+		  border: 0;
+		  border-radius: 3px;
+		  padding: 5px;
+		  color: black;
+		  
+		  &::-webkit-datetime-edit-month-field {
+		    color: black;
+		  }
+		  &::-webkit-datetime-edit-day-field {
+		    color: black;
+		  }
+		  &::-webkit-datetime-edit-year-field {
+		    color: black;
+		  }
+		  
+		  &::-webkit-clear-button {
+		    font-size: 18px;
+		    height: 30px;
+		    position: relative;
+		    right: 5px;
+		    margin-right: 4px;
+		  }
+		  &::-webkit-inner-spin-button {
+		    height: 30px;
+		  }
+		  &::-webkit-calendar-picker-indicator {
+		    font-size: 18px;
+		    
+		        
+		    &:hover {
+		      background-color: lighten(#2f2f2f,40%);
+		      color: darken(#fff, 10%);
+		      cursor: pointer;
+		    }
+		    &:active {
+		      color: blue;
+		    }
+		  }
+		}
+
     </style>
 </head>
 <body>
@@ -68,13 +120,13 @@
 
 		    </div>
 
-		    <div class="col-lg-2 col-md-2 col-sm-12" style="">
-		    	<h6 style="color: white;"><b>Check-In</b></h6>
+		    <div class="col-lg-2 col-md-2 col-sm-12" style="margin-top: 10px;" >
 				<input type="date" id="checkIn" name="checkIn" value="2020-06-12">
+				<h6 style="color: white;"><b>Check-In</b></h6>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-12" style="">
-				<h6 style="color: white;"><b>Check-Out</b></h6>
+			<div class="col-lg-2 col-md-2 col-sm-12" style="margin-top: 10px;">
 				<input type="date" id="checkOut" name="checkOut" value="2020-06-12" >
+				<h6 style="color: white;"><b>Check-Out</b></h6>
 			</div>
 
 			<div class="col-lg-4 col-md-2 col-sm-12" style="margin-top: 8px;">

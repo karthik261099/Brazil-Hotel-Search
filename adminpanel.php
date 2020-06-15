@@ -57,6 +57,8 @@ $link=mysqli_connect($servername,$username,$password,$dbname);
       <th scope="col">Location</th>
       <th scope="col">Hotel Name</th>
       <th scope="col">Affiliate Link</th>
+      <th scope="col">Latitude</th>
+      <th scope="col">Longitude</th>
       <th scope="col">Image URL</th>
       <th scope="col">Edit</th>
     </tr>
@@ -75,7 +77,9 @@ $link=mysqli_connect($servername,$username,$password,$dbname);
           <td style="max-width: 130px;">'.$row['location'].'</td>
   	     	<td style="max-width: 130px;">'.$row['hotelName'].'</td>
   	     	<td style="max-width: 200px; word-break: break-all;"><a target="_blank" href="'.$row['affiliateurl'].'">'.$row['affiliateurl'].'</a></td>
-          <td style="max-width: 130px;">'.$row['imgUrl'].'</td>
+          <td style="max-width: 130px;">'.$row['locationLatitude'].'</td>
+          <td style="max-width: 130px;">'.$row['locationLongitude'].'</td>
+          <td style="max-width: 100px;">'.$row['imgUrl'].'</td>
           <td style="max-width: 30px;"><a type="button" class="btn btn-warning" href="editHotel.php?hotelId='.$row['id'].'">Edit</a></td>
 	    </tr>
 
