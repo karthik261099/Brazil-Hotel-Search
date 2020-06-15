@@ -20,7 +20,7 @@
 
 <div class="container" style="margin-top: 30px; background-color: #febb02; padding: 5px; border-radius: 5px;">
 	<div class="col-lg-12 col-md-12 col-sm-12">
-		<form method="GET" action="search.html" id="searchForm">
+		<form method="GET" action="search.php" id="searchForm">
 		  <div class="row" style="text-align: center;">
 		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-bottom: 5px; margin-top: 8px;">
 
@@ -81,7 +81,7 @@
 				<div class="card">
 				  <div class="card-body accomodationCard" style="padding: 5px;">
 				  	<b>
-				    	0 Adults | 0 Children | 0 Rooms
+				    	<span class="adultsCount">0</span> Adults | <span class="childrenCount">0</span> Children | <span class="roomsCount">0</span> Rooms
 					</b>
 				  </div>
 				</div>
@@ -93,43 +93,46 @@
 				    		<h6>Adults</h6>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">+</button>
+				    		<button type="button" class="btn btn-outline-primary" id="decrementAdults">-</button>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<h6>9</h6>
+				    		<span class="adultsCount"><b><h6>0</h6></b></span>
+				    		<input type="hidden" name="adultsCount" id="adultsCountInput" value="0">
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">-</button>
+				    		<button type="button" class="btn btn-outline-primary" id="incrementAdults">+</button>
 				    	</div>
 				  	</div>
 				  	
 				  	<div class="row" style="margin: 5px;">
 				  		<div class="col-lg-6 col-md-6 col-sm-6">
-				    		<h6>Adults</h6>
+				    		<h6>Children</h6>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">+</button>
+				    		<button type="button" class="btn btn-outline-primary" id="decrementChildren">-</button>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<h6>9</h6>
+				    		<span class="childrenCount"><h6>0</h6></span>
+				    		<input type="hidden" name="childrenCount" id="childrenCountInput" value="0">
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">-</button>
+				    		<button type="button" class="btn btn-outline-primary" id="incrementChildren">+</button>
 				    	</div>
 				  	</div>
 
 				  	<div class="row" style="margin: 5px;">
 				  		<div class="col-lg-6 col-md-6 col-sm-6">
-				    		<h6>Adults</h6>
+				    		<h6>Rooms</h6>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">+</button>
+				    		<button type="button" class="btn btn-outline-primary" id="decrementRooms">-</button>
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<h6>9</h6>
+				    		<span class="roomsCount"><h6>0</h6></span>
+				    		<input type="hidden" name="roomsCount" id="roomsCountInput" value="0">
 				    	</div>
 				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary">-</button>
+				    		<button type="button" class="btn btn-outline-primary"  id="incrementRooms">+</button>
 				    	</div>
 				  	</div>
 
@@ -167,7 +170,6 @@
 $(document).ready(function(){
 
 	$("#searchBox").on("keyup", function() {
-
 		$("#countryList").removeClass("hide");
 
 		var value = $(this).val().toLowerCase();
@@ -179,7 +181,6 @@ $(document).ready(function(){
 				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 			});
 		}
-		
 	});
 
 	$(".list-group-item").on("click",function(){
@@ -191,6 +192,54 @@ $(document).ready(function(){
 	$(".accomodationCard").on("click",function(){
 		$(".accomodationCardPopUP").toggleClass("hide");
 	});
+
+	var adultsCount=0;
+	$("#incrementAdults").on("click",function(){
+		adultsCount=adultsCount+1;
+		$(".adultsCount").text(adultsCount);
+		$("#adultsCountInput").val(adultsCount);
+	});
+	$("#decrementAdults").on("click",function(){
+		adultsCount=adultsCount-1;
+		if(adultsCount<0){
+			adultsCount=0;
+		}
+		$(".adultsCount").text(adultsCount);
+		$("#adultsCountInput").val(adultsCount);
+	});
+
+
+	var childrenCount=0;
+	$("#incrementChildren").on("click",function(){
+		childrenCount=childrenCount+1;
+		$(".childrenCount").text(childrenCount);
+		$("#childrenCountInput").val(childrenCount);
+	});
+	$("#decrementChildren").on("click",function(){
+		childrenCount=childrenCount-1;
+		if(childrenCount<0){
+			childrenCount=0;
+		}
+		$(".childrenCount").text(childrenCount);
+		$("#childrenCountInput").val(childrenCount);
+	});
+
+
+	var roomsCount=0;
+	$("#incrementRooms").on("click",function(){
+		roomsCount=roomsCount+1;
+		$(".roomsCount").text(roomsCount);
+		$("#roomsCountInput").val(roomsCount);
+	});
+	$("#decrementRooms").on("click",function(){
+		roomsCount=roomsCount-1;
+		if(roomsCount<0){
+			roomsCount=0;
+		}
+		$(".roomsCount").text(roomsCount);
+		$("#roomsCountInput").val(roomsCount);
+	});
+
 
 
 });

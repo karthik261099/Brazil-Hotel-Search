@@ -92,6 +92,20 @@
 					    <li class="list-group-item"><b>Rio de Janeiro</b></li> -->
 					</ul> 
 
+					<?php
+
+					echo '
+
+						<input type="hidden" name="checkIn" value="'.$_GET['checkIn'].'">
+						<input type="hidden" name="checkOut" value="'.$_GET['checkOut'].'">
+						<input type="hidden" name="adultsCount" value="'.$_GET['adultsCount'].'">
+						<input type="hidden" name="childrenCount" value="'.$_GET['childrenCount'].'">
+						<input type="hidden" name="roomsCount" value="'.$_GET['roomsCount'].'">
+
+					';
+
+					?>
+
 		    	</div>
 			    <button type="submit" class="btn btn-primary btn-lg btn-block"><b>Search</b></button>
 			  </div>
