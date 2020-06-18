@@ -24,23 +24,6 @@
 </head>
 <body background="https://i1.wp.com/brazilbeyondrio.com/wp-content/uploads/2018/07/pedro-menezes-513074-unsplash-e1554601699844.jpg?resize=1500%2C1080&ssl=1">
 
-<!-- <div class="jumbotron" style="padding: 10px; margin: 20px;">
-	<button type="button" class="btn btn-light"><b>Back<b></button>
-  <h4 class="display-4" style="margin-left: 30px; text-align: center;">Search results for "Mumbai"</h4>
-</div>
-
-<div class="container">
-
-	<div class="card">
-	  <div class="card-body" style="text-align: center;">
-	    <h3 style="text-align: center;">Hotel Name goes here</h3>
-	    <button style="" type="button" class="btn btn-primary"><b>Book Now</b></button>
-	  </div>
-	</div>
-
-</div>
-	 -->
-
 <div class="row" style="margin: 20px;">
 
 	<div class="col-lg-6 col-md-12 col-sm-12" style="">
@@ -55,7 +38,7 @@
 			<div class="card" style="margin-top: 10px;">
 			  <div class="card-body" style="text-align: center;">
 			    <div class="form-group">
-			    	<input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area" autocomplete="off">
+			    	<input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area" autocomplete="off"  <?php if(isset($_GET['location'])){echo 'value="'.$_GET['location'].'"';}?> >
 
 			    	<ul class="list-group hide" id="countryList" style="margin-top: 5px;">
 			    		<?php
@@ -68,48 +51,156 @@
 						      }else{
 						      //connected to db successfully
 
-						        $query="SELECT DISTINCT location FROM hotels";
+						        $query="SELECT DISTINCT state FROM hotels";
 
 						        $result=mysqli_query($link,$query);
 
 						        while ($row=mysqli_fetch_array($result)) {
 						        	echo '
-						        		<li class="list-group-item"><b>'.$row['location'].'</b></li>
+						        		<li class="list-group-item"><b>'.$row['state'].'</b></li>
+						        	';
+						        }
+
+						        $query="SELECT DISTINCT state,city FROM hotels";
+
+						        $result=mysqli_query($link,$query);
+
+						        while ($row=mysqli_fetch_array($result)) {
+						        	echo '
+						        		<li class="list-group-item"><b>'.$row['state'].', '.$row['city'].'</b></li>
 						        	';
 						        }
 						    }
 
 			        	?>
-					    <!-- <li class="list-group-item"><b>Mumbai</b></li>
-					    <li class="list-group-item"><b>Indore</b></li>
-					    <li class="list-group-item"><b>Chennai</b></li>
-					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-					    <li class="list-group-item"><b>Delhi</b></li>
-					    <li class="list-group-item"><b>Rio de Janeiro</b></li> -->
-					</ul> 
-
-					<?php
-
-					echo '
-
-						<input type="hidden" name="checkIn" value="'.$_GET['checkIn'].'">
-						<input type="hidden" name="checkOut" value="'.$_GET['checkOut'].'">
-						<input type="hidden" name="adultsCount" value="'.$_GET['adultsCount'].'">
-						<input type="hidden" name="childrenCount" value="'.$_GET['childrenCount'].'">
-						<input type="hidden" name="roomsCount" value="'.$_GET['roomsCount'].'">
-
-					';
-
-					?>
-
+					</ul>
 		    	</div>
+
+		    	<div class="form-group">
+				    <select class="form-control" id="exampleFormControlSelect1" name="hotelType">
+				      <?php if(isset($_GET['hotelType'])){echo '<option>'.$_GET['hotelType'].'</option>';}?>
+				      <option>Hotel Type - Any</option>
+				      <?php
+
+				      	if(mysqli_connect_error()){
+					        echo "There was an error connecting to DB!";
+					      }else{
+					      //connected to db successfully
+
+					        $query="SELECT DISTINCT hotelType FROM hotels";
+
+					        $result=mysqli_query($link,$query);
+
+					        while ($row=mysqli_fetch_array($result)) {
+					        	echo '
+					        		<option>'.$row['hotelType'].'</option>
+					        	';
+					        }
+
+					    }
+
+
+				      ?>
+				    </select>
+				</div>
+
+				<div class="form-group">
+					<div class="row" style="margin: 5px;">
+				  		<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckwifi" name="wifi" <?php if(isset($_GET['wifi'])){echo "checked";}?> >
+
+						  <label class="form-check-label" for="defaultCheckwifi">
+						    WiFi
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckac" name="ac" <?php if(isset($_GET['ac'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckac">
+						    A/C
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultChecktv" name="tv" <?php if(isset($_GET['tv'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultChecktv">
+						    TV
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpool" name="pool" <?php if(isset($_GET['pool'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckpool">
+						    Pool
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckminibar" name="minibar" <?php if(isset($_GET['minibar'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckminibar">
+						    Minibar
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbar" name="bar" <?php if(isset($_GET['bar'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckbar">
+						    Bar
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpetsok" name="petsok" <?php if(isset($_GET['petsok'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckpetsok">
+						    Pets OK
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckrestaurant" name="restaurant" <?php if(isset($_GET['restaurant'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckrestaurant">
+						    Restaurant
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultChecktransfers" name="transfers" <?php if(isset($_GET['transfers'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultChecktransfers">
+						    Transfers
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbeach" name="beach" <?php if(isset($_GET['beach'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckbeach">
+						    Beach
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckveg" name="vegetarian" <?php if(isset($_GET['vegetarian'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckveg">
+						    Vegetarian
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1glutenfree" name="glutenfree" <?php if(isset($_GET['glutenfree'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheck1glutenfree">
+						    Gluten Free
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckenglishok" name="englishok" <?php if(isset($_GET['englishok'])){echo "checked";}?> >
+						  <label class="form-check-label" for="defaultCheckenglishok">
+						    English OK
+						  </label>
+						</div>
+
+				  	</div>
+				</div>
+
 			    <button type="submit" class="btn btn-primary btn-lg btn-block"><b>Search</b></button>
 			  </div>
 			</div>
@@ -129,16 +220,66 @@
 				      }else{
 				      //connected to db successfully
 
-				        $query="SELECT * FROM hotels WHERE location LIKE '%".$_GET['location']."%'";
+				      	//filter queries
+				      	$filterQueryString="";
+				      	if(isset($_GET['wifi'])){
+				      		$filterQueryString=$filterQueryString." wifi=1 AND";
+				      	}
+				      	if(isset($_GET['ac'])){
+				      		$filterQueryString=$filterQueryString." ac=1 AND";
+				      	}
+				      	if(isset($_GET['tv'])){
+				      		$filterQueryString=$filterQueryString." tv=1 AND";
+				      	}
+				      	if(isset($_GET['pool'])){
+				      		$filterQueryString=$filterQueryString." pool=1 AND";
+				      	}
+				      	if(isset($_GET['minibar'])){
+				      		$filterQueryString=$filterQueryString." minibar=1 AND";
+				      	}
+				      	if(isset($_GET['bar'])){
+				      		$filterQueryString=$filterQueryString." bar=1 AND";
+				      	}
+				      	if(isset($_GET['petsok'])){
+				      		$filterQueryString=$filterQueryString." petsok=1 AND";
+				      	}
+				      	if(isset($_GET['restaurant'])){
+				      		$filterQueryString=$filterQueryStrin." restaurant=1 AND";
+				      	}
+				      	if(isset($_GET['transfers'])){
+				      		$filterQueryString=$filterQueryString." transfers=1 AND";
+				      	}
+				      	if(isset($_GET['beach'])){
+				      		$filterQueryString=$filterQueryString." beach=1 AND";
+				      	}
+				      	if(isset($_GET['vegetarian'])){
+				      		$filterQueryString=$filterQueryString." vegetarian=1 AND";
+				      	}
+				      	if(isset($_GET['glutenfree'])){
+				      		$filterQueryString=$filterQueryString." glutenfree=1 AND";
+				      	}
+				      	if(isset($_GET['englishok'])){
+				      		$filterQueryString=$filterQueryString." englishok=1 AND";
+				      	}
+				      	if(isset($_GET['hotelType'])){
+				      		if($_GET['hotelType']!="Hotel Type - Any"){
+				      			$filterQueryString=$filterQueryString." hotelType='".$_GET['hotelType']."' AND";
+				      		}
+				      	}
+
+						$cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);  
+						//echo $cityName;  
+
+				        $query="SELECT * FROM hotels WHERE".$filterQueryString." state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
 
 				        $result=mysqli_query($link,$query);
 
 				        while ($row=mysqli_fetch_array($result)) {
 				        	echo '
 				        		<div class="col-lg-6 col-md-12 col-sm-12">
-				        			<a href="'.$row['affiliateurl'].'" target="_blank">
+				        			<a href="'.$row['siteUrl'].'" target="_blank">
 										<div class="card hotelCard" style="margin-top: 15px;">
-										  <img src="imagesHotels/'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
+										  <img src="'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
 										  <div class="card-img-overlay" >
 										    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>'.$row['hotelName'].'</b></h5>
 										  </div>
@@ -147,6 +288,7 @@
 								</div>
 				        	';
 				        }
+
 				    }
 
 	        	?>
@@ -240,7 +382,7 @@ function TestMarker() {
 <script type="text/javascript">
     var locations = [
     <?php
-    $query="SELECT * FROM hotels WHERE location LIKE '%".$_GET['location']."%'";
+    $query="SELECT * FROM hotels WHERE state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
 
     $result=mysqli_query($link,$query);
 

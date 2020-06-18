@@ -90,50 +90,72 @@
 					      }else{
 					      //connected to db successfully
 
-					        $query="SELECT DISTINCT location FROM hotels";
+					        $query="SELECT DISTINCT state FROM hotels";
 
 					        $result=mysqli_query($link,$query);
 
 					        while ($row=mysqli_fetch_array($result)) {
 					        	echo '
-					        		<li class="list-group-item"><b>'.$row['location'].'</b></li>
+					        		<li class="list-group-item"><b>'.$row['state'].'</b></li>
 					        	';
 					        }
+
+					        $query="SELECT DISTINCT state,city FROM hotels";
+
+					        $result=mysqli_query($link,$query);
+
+					        while ($row=mysqli_fetch_array($result)) {
+					        	echo '
+					        		<li class="list-group-item"><b>'.$row['state'].', '.$row['city'].'</b></li>
+					        	';
+					        }
+
 					    }
 
 
 		        	?>
 				    <!-- <li class="list-group-item"><b>Mumbai</b></li>
 				    <li class="list-group-item"><b>Indore</b></li>
-				    <li class="list-group-item"><b>Chennai</b></li>
-				    <li class="list-group-item"><b>Delhi</b></li>
-				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-				    <li class="list-group-item"><b>Delhi</b></li>
-				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-				    <li class="list-group-item"><b>Delhi</b></li>
-				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
-				    <li class="list-group-item"><b>Delhi</b></li>
-				    <li class="list-group-item"><b>Rio de Janeiro</b></li>
 				    <li class="list-group-item"><b>Delhi</b></li>
 				    <li class="list-group-item"><b>Rio de Janeiro</b></li> -->
 				</ul> 
 
 		    </div>
 
-		    <div class="col-lg-2 col-md-2 col-sm-12" style="margin-top: 10px;" >
-				<input type="date" id="checkIn" name="checkIn" value="2020-06-12">
-				<h6 style="color: white;"><b>Check-In</b></h6>
-			</div>
-			<div class="col-lg-2 col-md-2 col-sm-12" style="margin-top: 10px;">
-				<input type="date" id="checkOut" name="checkOut" value="2020-06-12" >
-				<h6 style="color: white;"><b>Check-Out</b></h6>
+		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 8px;" >
+				<div class="form-group">
+				    <select class="form-control" id="exampleFormControlSelect1" name="hotelType">
+				      <option value="Hotel Type - Any">Hotel Type - Any</option>
+				      <?php
+
+				      	if(mysqli_connect_error()){
+					        echo "There was an error connecting to DB!";
+					      }else{
+					      //connected to db successfully
+
+					        $query="SELECT DISTINCT hotelType FROM hotels";
+
+					        $result=mysqli_query($link,$query);
+
+					        while ($row=mysqli_fetch_array($result)) {
+					        	echo '
+					        		<option>'.$row['hotelType'].'</option>
+					        	';
+					        }
+
+					    }
+
+
+				      ?>
+				    </select>
+				</div>
 			</div>
 
-			<div class="col-lg-4 col-md-2 col-sm-12" style="margin-top: 8px;">
+			<div class="col-lg-4 col-md-12 col-sm-12" style="margin-top: 9px;">
 				<div class="card">
 				  <div class="card-body accomodationCard" style="padding: 5px;">
 				  	<b>
-				    	<span class="adultsCount">0</span> Adults | <span class="childrenCount">0</span> Children | <span class="roomsCount">0</span> Rooms
+				    	Add Filters
 					</b>
 				  </div>
 				</div>
@@ -141,61 +163,107 @@
 				  <div class="card-body">
 
 				  	<div class="row" style="margin: 5px;">
-				  		<div class="col-lg-6 col-md-6 col-sm-6">
-				    		<h6>Adults</h6>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary" id="decrementAdults">-</button>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<span class="adultsCount"><b><h6>0</h6></b></span>
-				    		<input type="hidden" name="adultsCount" id="adultsCountInput" value="0">
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary" id="incrementAdults">+</button>
-				    	</div>
-				  	</div>
-				  	
-				  	<div class="row" style="margin: 5px;">
-				  		<div class="col-lg-6 col-md-6 col-sm-6">
-				    		<h6>Children</h6>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary" id="decrementChildren">-</button>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<span class="childrenCount"><h6>0</h6></span>
-				    		<input type="hidden" name="childrenCount" id="childrenCountInput" value="0">
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary" id="incrementChildren">+</button>
-				    	</div>
-				  	</div>
+				  		<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckwifi" name="wifi">
+						  <label class="form-check-label" for="defaultCheckwifi">
+						    WiFi
+						  </label>
+						</div>
 
-				  	<div class="row" style="margin: 5px;">
-				  		<div class="col-lg-6 col-md-6 col-sm-6">
-				    		<h6>Rooms</h6>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary" id="decrementRooms">-</button>
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<span class="roomsCount"><h6>0</h6></span>
-				    		<input type="hidden" name="roomsCount" id="roomsCountInput" value="0">
-				    	</div>
-				    	<div class="col-lg-2 col-md-2 col-sm-2">
-				    		<button type="button" class="btn btn-outline-primary"  id="incrementRooms">+</button>
-				    	</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckac" name="ac">
+						  <label class="form-check-label" for="defaultCheckac">
+						    A/C
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultChecktv" name="tv">
+						  <label class="form-check-label" for="defaultChecktv">
+						    TV
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpool" name="pool">
+						  <label class="form-check-label" for="defaultCheckpool">
+						    Pool
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckminibar" name="minibar">
+						  <label class="form-check-label" for="defaultCheckminibar">
+						    Minibar
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbar" name="bar">
+						  <label class="form-check-label" for="defaultCheckbar">
+						    Bar
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpetsok" name="petsok">
+						  <label class="form-check-label" for="defaultCheckpetsok">
+						    Pets OK
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckrestaurant" name="restaurant">
+						  <label class="form-check-label" for="defaultCheckrestaurant">
+						    Restaurant
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultChecktransfers" name="transfers">
+						  <label class="form-check-label" for="defaultChecktransfers">
+						    Transfers
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbeach" name="beach">
+						  <label class="form-check-label" for="defaultCheckbeach">
+						    Beach
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckveg" name="vegetarian">
+						  <label class="form-check-label" for="defaultCheckveg">
+						    Vegetarian
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1glutenfree" name="glutenfree">
+						  <label class="form-check-label" for="defaultCheck1glutenfree">
+						    Gluten Free
+						  </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" value="1" id="defaultCheckenglishok" name="englishok">
+						  <label class="form-check-label" for="defaultCheckenglishok">
+						    English OK
+						  </label>
+						</div>
+
 				  	</div>
+				  
 
 				  </div>
 				</div>
 			</div>
 
-		    <div class="col-lg-1 col-md-12 col-sm-12" style="margin-top: 8px;">
-		      <button type="submit" class="btn btn-primary"><b>Search</b></button>
+		    <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top: 8px;">
+		      <button type="submit" class="btn btn-primary btn-block"><b>Search</b></button>
 		    </div>
-
 		    
 
 		  </div>
@@ -244,54 +312,6 @@ $(document).ready(function(){
 	$(".accomodationCard").on("click",function(){
 		$(".accomodationCardPopUP").toggleClass("hide");
 	});
-
-	var adultsCount=0;
-	$("#incrementAdults").on("click",function(){
-		adultsCount=adultsCount+1;
-		$(".adultsCount").text(adultsCount);
-		$("#adultsCountInput").val(adultsCount);
-	});
-	$("#decrementAdults").on("click",function(){
-		adultsCount=adultsCount-1;
-		if(adultsCount<0){
-			adultsCount=0;
-		}
-		$(".adultsCount").text(adultsCount);
-		$("#adultsCountInput").val(adultsCount);
-	});
-
-
-	var childrenCount=0;
-	$("#incrementChildren").on("click",function(){
-		childrenCount=childrenCount+1;
-		$(".childrenCount").text(childrenCount);
-		$("#childrenCountInput").val(childrenCount);
-	});
-	$("#decrementChildren").on("click",function(){
-		childrenCount=childrenCount-1;
-		if(childrenCount<0){
-			childrenCount=0;
-		}
-		$(".childrenCount").text(childrenCount);
-		$("#childrenCountInput").val(childrenCount);
-	});
-
-
-	var roomsCount=0;
-	$("#incrementRooms").on("click",function(){
-		roomsCount=roomsCount+1;
-		$(".roomsCount").text(roomsCount);
-		$("#roomsCountInput").val(roomsCount);
-	});
-	$("#decrementRooms").on("click",function(){
-		roomsCount=roomsCount-1;
-		if(roomsCount<0){
-			roomsCount=0;
-		}
-		$(".roomsCount").text(roomsCount);
-		$("#roomsCountInput").val(roomsCount);
-	});
-
 
 
 });

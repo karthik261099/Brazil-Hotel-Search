@@ -48,18 +48,34 @@ $link=mysqli_connect($servername,$username,$password,$dbname);
   <a href="logoutClicked.php"><button class="btn btn-danger" style="float: right;margin-right: 10px;"><b>Logout</b></button></a>
   <a href="addHotel.php"><button class="btn btn-warning" style="float: right;margin-right: 10px;"><b>Add Hotel</b></button></a>
   <a href="adminpanel.php"><button class="btn btn-success" style="float: right; margin-right: 10px;"><b>All Hotels</b></button></a>
+  <a href="uploadCsv.php"><button class="btn btn-primary" style="float: right; margin-right: 10px;"><b>CSV</b></button></a>
 </nav>
 
 <table class="table table-bordered" style="text-align: center;">
   <thead class="thead-dark">
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Location</th>
       <th scope="col">Hotel Name</th>
-      <th scope="col">Affiliate Link</th>
+      <th scope="col">Hotel Type</th>
+      <th scope="col">State</th>
+      <th scope="col">City</th>
       <th scope="col">Latitude</th>
       <th scope="col">Longitude</th>
+      <th scope="col" style="max-width: 200px;">Site URL</th>
       <th scope="col">Image URL</th>
+      <th scope="col">WiFi</th>
+      <th scope="col">AC</th>
+      <th scope="col">TV</th>
+      <th scope="col">Pool</th>
+      <th scope="col">Minibar</th>
+      <th scope="col">Bar</th>
+      <th scope="col">Pets OK</th>
+      <th scope="col">Restaurant</th>
+      <th scope="col">Transfers</th>
+      <th scope="col">Beach</th>
+      <th scope="col">Vegetarian</th>
+      <th scope="col">Gluten Free</th>
+      <th scope="col">English OK</th>
       <th scope="col">Edit</th>
     </tr>
   </thead>
@@ -73,14 +89,30 @@ $link=mysqli_connect($servername,$username,$password,$dbname);
     
     	echo '
     	<tr>
-	      	<th scope="row" style="max-width: 50px;">'.$row['id'].'</th>
-          <td style="max-width: 130px;">'.$row['location'].'</td>
+	      	<th scope="row" style="max-width: 40px;">'.$row['id'].'</th>
   	     	<td style="max-width: 130px;">'.$row['hotelName'].'</td>
-  	     	<td style="max-width: 200px; word-break: break-all;"><a target="_blank" href="'.$row['affiliateurl'].'">'.$row['affiliateurl'].'</a></td>
+          <td style="max-width: 130px;">'.$row['hotelType'].'</td>
+          <td style="max-width: 130px;">'.$row['state'].'</td>
+          <td style="max-width: 130px;">'.$row['city'].'</td>
           <td style="max-width: 130px;">'.$row['locationLatitude'].'</td>
           <td style="max-width: 130px;">'.$row['locationLongitude'].'</td>
-          <td style="max-width: 100px;">'.$row['imgUrl'].'</td>
-          <td style="max-width: 30px;"><a type="button" class="btn btn-warning" href="editHotel.php?hotelId='.$row['id'].'">Edit</a></td>
+  	     	<td style="min-width: 220px; word-break: break-all;"><a target="_blank" href="'.$row['siteUrl'].'">'.$row['siteUrl'].'</a></td>
+          <td style="min-width: 220px; word-break: break-all;"><a target="_blank" href="'.$row['imgUrl'].'">'.$row['imgUrl'].'</a></td>
+          <td style="max-width: 50px;">'.$row['wifi'].'</td>
+          <td style="max-width: 50px;">'.$row['ac'].'</td>
+          <td style="max-width: 50px;">'.$row['tv'].'</td>
+          <td style="max-width: 50px;">'.$row['pool'].'</td>
+          <td style="max-width: 50px;">'.$row['minibar'].'</td>
+          <td style="max-width: 50px;">'.$row['bar'].'</td>
+          <td style="max-width: 50px;">'.$row['petsok'].'</td>
+          <td style="max-width: 50px;">'.$row['restaurant'].'</td>
+          <td style="max-width: 50px;">'.$row['transfers'].'</td>
+          <td style="max-width: 50px;">'.$row['beach'].'</td>
+          <td style="max-width: 50px;">'.$row['vegetarian'].'</td>
+          <td style="max-width: 50px;">'.$row['glutenfree'].'</td>
+          <td style="max-width: 50px;">'.$row['englishok'].'</td>
+
+          <td style="min-width: 50px;"><a type="button" class="btn btn-warning" href="editHotel.php?hotelId='.$row['id'].'">Edit</a></td>
 	    </tr>
 
     	';

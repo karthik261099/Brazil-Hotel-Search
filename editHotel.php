@@ -12,68 +12,79 @@ $updateSuccessful=0;
 $deleteSuccessful=0;
 if(isset($_POST['submitted'])){
 
-  $query="UPDATE hotels SET location='".$_POST['newLocation']."' , hotelName='".$_POST['newHotelName']."' , affiliateurl='".$_POST['newAffiliateUrl']."', locationLatitude=".$_POST['locationLatitude'].", locationLongitude=".$_POST['locationLongitude']." WHERE id=".$_GET['hotelId'];
+  $filterQueryString="";
+  if(isset($_POST['wifi'])){
+    $filterQueryString=$filterQueryString.", wifi=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", wifi=0 ";
+  }
+  if(isset($_POST['ac'])){
+    $filterQueryString=$filterQueryString.", ac=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", ac=0 ";
+  }
+  if(isset($_POST['tv'])){
+    $filterQueryString=$filterQueryString.", tv=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", tv=0 ";
+  }
+  if(isset($_POST['pool'])){
+    $filterQueryString=$filterQueryString.", pool=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", pool=0 ";
+  }
+  if(isset($_POST['minibar'])){
+    $filterQueryString=$filterQueryString.", minibar=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", minibar=0 ";
+  }
+  if(isset($_POST['bar'])){
+    $filterQueryString=$filterQueryString.", bar=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", bar=0 ";
+  }
+  if(isset($_POST['petsok'])){
+    $filterQueryString=$filterQueryString.", petsok=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", petsok=0 ";
+  }
+  if(isset($_POST['restaurant'])){
+    $filterQueryString=$filterQueryString.", restaurant=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", restaurant=0 ";
+  }
+  if(isset($_POST['transfers'])){
+    $filterQueryString=$filterQueryString.", transfers=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", transfers=0 ";
+  }
+  if(isset($_POST['beach'])){
+    $filterQueryString=$filterQueryString.", beach=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", beach=0 ";
+  }
+  if(isset($_POST['vegetarian'])){
+    $filterQueryString=$filterQueryString.", vegetarian=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", vegetarian=0 ";
+  }
+  if(isset($_POST['glutenfree'])){
+    $filterQueryString=$filterQueryString.", glutenfree=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", glutenfree=0 ";
+  }
+  if(isset($_POST['englishok'])){
+    $filterQueryString=$filterQueryString.", englishok=1 ";
+  }else{
+    $filterQueryString=$filterQueryString.", englishok=0 ";
+  }
+
+  $query="UPDATE hotels SET state='".$_POST['newState']."', city='".$_POST['newCity']."', hotelName='".$_POST['newHotelName']."' , hotelType='".$_POST['newHotelType']."', siteUrl='".$_POST['newSiteUrl']."', imgUrl='".$_POST['newImgUrl']."', locationLatitude=".$_POST['locationLatitude'].", locationLongitude=".$_POST['locationLongitude'].$filterQueryString." WHERE id=".$_GET['hotelId'];
 
   if(mysqli_query($link,$query)){
     //SUCCESSFULLY ADDED AFFILIATE URL
     $updateSuccessful=1;
   }
-
-  //IMAGE UPLOAD////////////////////////////////////////////////////////////////////
-  if(file_exists($_FILES['fileToUpload']['tmp_name']) || is_uploaded_file($_FILES['fileToUpload']['tmp_name'])){
-
-    $target_dir = "imagesHotels/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-    // Check if image file is a actual image or fake image
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-      //echo "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-    } else {
-      //echo "File is not an image.";
-      $uploadOk = 0;
-    }
-
-
-    // Check if file already exists
-    if (file_exists($target_file)) {
-      //echo "Sorry, file already exists.";
-      $uploadOk = 0;
-    }
-
-
-    // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
-      //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-      $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-      //echo "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
-    } else {
-      $fileName=time()."-".basename($_FILES["fileToUpload"]["name"]);
-      $finalFileLocation=$target_dir.$fileName;
-      if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $finalFileLocation)) {
-        //echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-
-        $query="UPDATE hotels SET imgUrl='".$fileName."' WHERE id=".$_GET['hotelId'];
-
-        if(mysqli_query($link,$query)){
-          //SUCCESSFULLY ADDED AFFILIATE URL
-          $updateSuccessful=1;
-        }
-
-      } else {
-        //echo "Sorry, there was an error uploading your file.";
-      }
-    }
-}
 
 }
 
@@ -130,6 +141,7 @@ if(isset($_POST['deleted'])){
   <a href="logoutClicked.php"><button class="btn btn-danger" style="float: right;margin-right: 10px;"><b>Logout</b></button></a>
   <a href="addHotel.php"><button class="btn btn-warning" style="float: right;margin-right: 10px;"><b>Add Hotel</b></button></a>
   <a href="adminpanel.php"><button class="btn btn-success" style="float: right; margin-right: 10px;"><b>All Hotels</b></button></a>
+  <a href="uploadCsv.php"><button class="btn btn-primary" style="float: right; margin-right: 10px;"><b>CSV</b></button></a>
   
 </nav>
 
@@ -177,13 +189,6 @@ if(isset($_POST['deleted'])){
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><b>Hotel Location</b></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Hotel Location" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newLocation" value="'.$row['location'].'">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><b>Hotel Name</b></span>
               </div>
               <input type="text" class="form-control" placeholder="Hotel Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newHotelName" value="'.$row['hotelName'].'">
@@ -191,9 +196,23 @@ if(isset($_POST['deleted'])){
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><b>Affiliate URL</b></span>
+                <span class="input-group-text" id="basic-addon1"><b>Hotel Type</b></span>
               </div>
-              <input type="text" class="form-control" placeholder="Affiliate URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newAffiliateUrl" value="'.$row['affiliateurl'].'">
+              <input type="text" class="form-control" placeholder="Hotel Type" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newHotelType" value="'.$row['hotelType'].'">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>State</b></span>
+              </div>
+              <input type="text" class="form-control" placeholder="State" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newState" value="'.$row['state'].'">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>City</b></span>
+              </div>
+              <input type="text" class="form-control" placeholder="City" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newCity" value="'.$row['city'].'">
             </div>
 
             <div class="input-group mb-3">
@@ -210,21 +229,19 @@ if(isset($_POST['deleted'])){
               <input type="number" class="form-control" placeholder="Location Longitude" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="locationLongitude" required="true" step="0.000001" value="'.$row['locationLongitude'].'">
             </div>
 
-            <div class="card">
-              <img src="imagesHotels/'.$row['imgUrl'].'" class="card-img-top" alt="Image not Available. Please Upload">
-              <div class="card-body">
-                <p class="card-text">'.$row['imgUrl'].'</p>
-                <input type="file" name="fileToUpload" id="fileToUpload">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><b>Site URL</b></span>
               </div>
+              <input type="text" class="form-control" placeholder="Site URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newSiteUrl" value="'.$row['siteUrl'].'">
             </div>
 
-
-
-            <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="UPDATE">
-
-            <br>
-
-            <input type="submit" class="btn btn-outline-danger" style="margin-top:5px;" name="deleted" value="DELETE">
+            <div class="card">
+              <img src="'.$row['imgUrl'].'" class="card-img-top" alt="Image not Available. Please Upload">
+              <div class="card-body">
+                <input type="text" class="form-control" placeholder="Image URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" name="newImgUrl" value="'.$row['imgUrl'].'">
+              </div>
+            </div>
 
             ';
         } 
@@ -232,13 +249,113 @@ if(isset($_POST['deleted'])){
 
       ?>
 
+      <div class="form-group">
+        <div class="row" style="margin: 5px;">
+            
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckwifi" name="wifi" <?php if($row['wifi']==1){echo "checked";}?> >
+
+            <label class="form-check-label" for="defaultCheckwifi">
+              WiFi
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckac" name="ac" <?php if($row['ac']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckac">
+              A/C
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultChecktv" name="tv" <?php if($row['tv']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultChecktv">
+              TV
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpool" name="pool" <?php if($row['pool']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckpool">
+              Pool
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckminibar" name="minibar" <?php if($row['minibar']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckminibar">
+              Minibar
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbar" name="bar" <?php if($row['bar']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckbar">
+              Bar
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckpetsok" name="petsok" <?php if($row['petsok']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckpetsok">
+              Pets OK
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckrestaurant" name="restaurant" <?php if($row['restaurant']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckrestaurant">
+              Restaurant
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultChecktransfers" name="transfers" <?php if($row['transfers']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultChecktransfers">
+              Transfers
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckbeach" name="beach" <?php if($row['beach']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckbeach">
+              Beach
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckveg" name="vegetarian" <?php if($row['vegetarian']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckveg">
+              Vegetarian
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1glutenfree" name="glutenfree" <?php if($row['glutenfree']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheck1glutenfree">
+              Gluten Free
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheckenglishok" name="englishok" <?php if($row['englishok']==1){echo "checked";}?> >
+            <label class="form-check-label" for="defaultCheckenglishok">
+              English OK
+            </label>
+          </div>
+
+          </div>
+      </div>
+
+      <input type="submit" class="btn btn-outline-primary" style="margin-top:5px;" name="submitted" value="UPDATE">
+
+      <br>
+
+      <input type="submit" class="btn btn-outline-danger" style="margin-top:5px;" name="deleted" value="DELETE">
 
     </div>
 </form>
 
-<form>
-  
-</form>
 
  <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
