@@ -112,6 +112,9 @@ if(isset($_POST['uploadCsv'])){
   
 </nav>
 
+<form method="GET" action="downloadCsvTemplate.php" style="text-align: center;margin-top: 5px;">
+	<input type="submit" class="btn btn-success" style="margin-top:5px;" name="downloadCsvTemplate" value="Download CSV Template">
+</form>
 
 <form method="POST" enctype="multipart/form-data">
     <div class="container" style="text-align: center; border: 5px solid black; padding: 20px; border-radius: 10px; margin: 10px auto; max-width: 700px;">
