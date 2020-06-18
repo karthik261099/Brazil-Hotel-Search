@@ -267,27 +267,30 @@
 				      		}
 				      	}
 
-						$cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);  
+				      	if(isset($_GET['location'])){
+				      		$cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);  
+				      	
 						//echo $cityName;  
 
-				        $query="SELECT * FROM hotels WHERE".$filterQueryString." state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
+					        $query="SELECT * FROM hotels WHERE".$filterQueryString." state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
 
-				        $result=mysqli_query($link,$query);
+					        $result=mysqli_query($link,$query);
 
-				        while ($row=mysqli_fetch_array($result)) {
-				        	echo '
-				        		<div class="col-lg-6 col-md-12 col-sm-12">
-				        			<a href="'.$row['siteUrl'].'" target="_blank">
-										<div class="card hotelCard" style="margin-top: 15px;">
-										  <img src="'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
-										  <div class="card-img-overlay" >
-										    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>'.$row['hotelName'].'</b></h5>
-										  </div>
-										</div>
-									</a>
-								</div>
-				        	';
-				        }
+					        while ($row=mysqli_fetch_array($result)) {
+					        	echo '
+					        		<div class="col-lg-6 col-md-12 col-sm-12">
+					        			<a href="'.$row['siteUrl'].'" target="_blank">
+											<div class="card hotelCard" style="margin-top: 15px;">
+											  <img src="'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
+											  <div class="card-img-overlay" >
+											    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>'.$row['hotelName'].'</b></h5>
+											  </div>
+											</div>
+										</a>
+									</div>
+					        	';
+					        }
+				    	}
 
 				    }
 
