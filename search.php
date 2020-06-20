@@ -5,6 +5,8 @@
 	<!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
     <style type="text/css">
     	.hide{
     		display: none;
@@ -18,6 +20,15 @@
     	.hotelCard:hover{
     		transform: scale(1.04);
     		transition: all 0.5s;
+    	}
+    	body{
+    		font-family: 'Alegreya', serif; font-size: 18px;
+    	}
+    	.hotelNameOnImage{
+		  color: white;
+		  margin-bottom: 2px;
+		  font-size: 25px;
+		  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     	}
 
     </style>
@@ -201,7 +212,7 @@
 				  	</div>
 				</div>
 
-			    <button type="submit" class="btn btn-primary btn-lg btn-block"><b>Search</b></button>
+			    <button type="submit" class="btn btn-primary btn-lg btn-block" style=" background: #00bcd4; border: black; color: white;"><b>Search</b></button>
 			  </div>
 			</div>
 		</form>
@@ -244,7 +255,7 @@
 				      		$filterQueryString=$filterQueryString." petsok=1 AND";
 				      	}
 				      	if(isset($_GET['restaurant'])){
-				      		$filterQueryString=$filterQueryStrin." restaurant=1 AND";
+				      		$filterQueryString=$filterQueryString." restaurant=1 AND";
 				      	}
 				      	if(isset($_GET['transfers'])){
 				      		$filterQueryString=$filterQueryString." transfers=1 AND";
@@ -263,16 +274,31 @@
 				      	}
 				      	if(isset($_GET['hotelType'])){
 				      		if($_GET['hotelType']!="Hotel Type - Any"){
-				      			$filterQueryString=$filterQueryString." hotelType='".$_GET['hotelType']."' AND";
+				      			$filterQueryString=$filterQueryString." hotelType='".$_GET['hotelType']."'";
+				      		}else{
+				      			$filterQueryString=$filterQueryString." hotelType LIKE '%'";
 				      		}
 				      	}
+				      	if(isset($_GET['location']) AND array_key_exists('location', $_GET) AND $_GET['location']!=""){
 
-				      	if(isset($_GET['location'])){
-				      		$cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);  
+				      		if (strpos($_GET['location'], ',') !== false) {
+							    $cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);
+							    $filterQueryString=$filterQueryString." AND city LIKE '%".$cityName."%'";
+							}else{
+								$filterQueryString=$filterQueryString."AND state LIKE '%".$_GET['location']."%'";
+							}
+				      		
+				      		//$filterQueryString=$filterQueryString."AND state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
+				      	}else{
+				      		$filterQueryString=$filterQueryString."AND state LIKE '%' AND city LIKE '%'";
+				      	}
+
+				      	//if(isset($_GET['location'])){
+				      		//$cityName = substr($_GET['location'], strpos($_GET['location'], ",") + 2);  
 				      	
-						//echo $cityName;  
+							//echo $cityName;  
 
-					        $query="SELECT * FROM hotels WHERE".$filterQueryString." state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
+					        $query="SELECT * FROM hotels WHERE".$filterQueryString;
 
 					        $result=mysqli_query($link,$query);
 
@@ -283,14 +309,14 @@
 											<div class="card hotelCard" style="margin-top: 15px;">
 											  <img src="'.$row['imgUrl'].'" class="card-img" alt="'.$row['hotelName'].'">
 											  <div class="card-img-overlay" >
-											    <h5 class="card-title" style="color: white; margin-bottom: 2px;"><b>'.$row['hotelName'].'</b></h5>
+											    <h5 class="card-title hotelNameOnImage"><b>'.$row['hotelName'].'</b></h5>
 											  </div>
 											</div>
 										</a>
 									</div>
 					        	';
 					        }
-				    	}
+				    	//}
 
 				    }
 
@@ -385,7 +411,7 @@ function TestMarker() {
 <script type="text/javascript">
     var locations = [
     <?php
-    $query="SELECT * FROM hotels WHERE state LIKE '%".$_GET['location']."%' OR city LIKE '%".$cityName."%'";
+    $query="SELECT * FROM hotels WHERE".$filterQueryString;
 
     $result=mysqli_query($link,$query);
 

@@ -5,6 +5,8 @@
 	<!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
     <style type="text/css">
     	.hide{
     		display: none;
@@ -14,67 +16,19 @@
     		background: #007bff;
     		color: white;
     	}
-
-
-		input[type=date] {
-		  height: 35px;
-		  margin: 0 auto;
-		  width: 100%;
-		  font-family: arial, sans-serif;
-		  font-size: 18px;
-		  font-weight: bold;
-		  text-transform: uppercase;
-		  background-color: white;
-		  outline: none;
-		  border: 0;
-		  border-radius: 3px;
-		  padding: 5px;
-		  color: black;
-		  
-		  &::-webkit-datetime-edit-month-field {
-		    color: black;
-		  }
-		  &::-webkit-datetime-edit-day-field {
-		    color: black;
-		  }
-		  &::-webkit-datetime-edit-year-field {
-		    color: black;
-		  }
-		  
-		  &::-webkit-clear-button {
-		    font-size: 18px;
-		    height: 30px;
-		    position: relative;
-		    right: 5px;
-		    margin-right: 4px;
-		  }
-		  &::-webkit-inner-spin-button {
-		    height: 30px;
-		  }
-		  &::-webkit-calendar-picker-indicator {
-		    font-size: 18px;
-		    
-		        
-		    &:hover {
-		      background-color: lighten(#2f2f2f,40%);
-		      color: darken(#fff, 10%);
-		      cursor: pointer;
-		    }
-		    &:active {
-		      color: blue;
-		    }
-		  }
-		}
+    	body{
+    		font-family: 'Alegreya', serif; font-size: 18px;
+    	}
 
     </style>
 </head>
 <body>
 
-<div class="container" style="margin-top: 30px; background-color: #febb02; padding: 5px; border-radius: 5px;">
+<div class="container" style="margin-top: 10px; background-color: #c8c8c8; padding: 5px; border-radius: 5px;">
 	<div class="col-lg-12 col-md-12 col-sm-12">
 		<form method="GET" action="search.php" id="searchForm">
-		  <div class="row" style="text-align: center;">
-		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-bottom: 5px; margin-top: 8px;">
+		  <div class="row" style="text-align: center; padding: 10px;">
+		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 5px;">
 
 		        <input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area"
 		        autocomplete="off">
@@ -122,8 +76,8 @@
 
 		    </div>
 
-		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 8px;" >
-				<div class="form-group">
+		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 5px;" >
+				<div class="form-group" style="margin: 0px;">
 				    <select class="form-control" id="exampleFormControlSelect1" name="hotelType">
 				      <option value="Hotel Type - Any">Hotel Type - Any</option>
 				      <?php
@@ -151,7 +105,7 @@
 				</div>
 			</div>
 
-			<div class="col-lg-4 col-md-12 col-sm-12" style="margin-top: 9px;">
+			<div class="col-lg-4 col-md-12 col-sm-12" style="margin-top: 5px;">
 				<div class="card">
 				  <div class="card-body accomodationCard" style="padding: 5px;">
 				  	<b>
@@ -261,8 +215,8 @@
 				</div>
 			</div>
 
-		    <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top: 8px;">
-		      <button type="submit" class="btn btn-primary btn-block"><b>Search</b></button>
+		    <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top: 5px;">
+		      <button type="submit" class="btn btn-primary btn-block" style="background: #00bcd4; border: black; color: white; font-family: 'Alegreya', serif; font-size: 18px;"><b>Search</b></button>
 		    </div>
 		    
 
