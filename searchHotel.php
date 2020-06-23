@@ -45,7 +45,7 @@
 	
 	<div class="col-lg-6 col-md-12 col-sm-12">
 
-		<form method="GET" action="search.php" id="searchForm">
+		<form method="GET" id="searchForm">
 			<div class="card" style="margin-top: 10px;">
 			  <div class="card-body" style="text-align: center;">
 			    <div class="form-group">
@@ -405,7 +405,7 @@ function TestMarker() {
 }
 </script> -->
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIX2aNMeU2L003GB4g7vqX0CsQQUox10g&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr7jwqRUriohbqdJX5LUSfBMAxM9CqinI&callback=myMap"></script>
 <!-- <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"></script> -->
 
 <script type="text/javascript">

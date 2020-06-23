@@ -1,9 +1,9 @@
 <?php
 
 // $servername = "localhost";
-// $username = "rita";
-// $password = "Mysql@123";
-// $dbname = "fullreignregister";
+// $username = "givebirt_infotec";
+// $password = "encourageinfotech";
+// $dbname = "givebirt_infotec";
 
 $servername = "localhost";
 $username = "root";

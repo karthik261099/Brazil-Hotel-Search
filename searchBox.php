@@ -16,7 +16,7 @@
     		background: #007bff;
     		color: white;
     	}
-    	body{
+    	.searchBoxContainer{
     		font-family: 'Alegreya', serif; font-size: 18px;
     	}
 
@@ -24,9 +24,9 @@
 </head>
 <body>
 
-<div class="container" style="margin-top: 10px; background-color: #c8c8c8; padding: 5px; border-radius: 5px;">
+<div class="container searchBoxContainer" style="margin-top: 20vh; background-color: #c8c8c8; padding: 5px; border-radius: 5px;">
 	<div class="col-lg-12 col-md-12 col-sm-12">
-		<form method="GET" action="search.php" id="searchForm">
+		<form method="GET" action="searchHotel.php" id="searchForm">
 		  <div class="row" style="text-align: center; padding: 10px;">
 		    <div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 5px;">
 
@@ -223,8 +223,6 @@
 		  </div>
 		</form>
 	</div>
-
-	
 
 </div>
 
