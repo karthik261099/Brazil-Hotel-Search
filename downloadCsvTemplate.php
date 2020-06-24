@@ -1,4 +1,9 @@
 <?php
+/*
+Template Name: downloadCsvTemplate.php
+*/
+?>
+<?php
 if(isset($_GET['downloadCsvTemplate'])){  
 
 	$file = ("template.csv");

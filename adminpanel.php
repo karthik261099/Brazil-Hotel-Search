@@ -1,4 +1,9 @@
 <?php
+/*
+Template Name: adminpanel.php
+*/
+?>
+<?php
 session_start();
 if(!isset($_SESSION['loggedInSuccess']) OR $_SESSION['loggedInSuccess']!="True"){
   header("Location: adminlogin.php");

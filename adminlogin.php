@@ -1,4 +1,9 @@
 <?php
+/*
+Template Name: adminlogin.php
+*/
+?>
+<?php
 
 	session_start();
 

@@ -1,4 +1,9 @@
 <?php
+/*
+Template Name: test.php
+*/
+?>
+<?php
 if(isset($_POST["submit"])) {
   
   $target_dir = "imagesHotels/";

@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: searchHotel.php
+*/
+?>
 <!DOCTYPE html>
 <html>
 <head>

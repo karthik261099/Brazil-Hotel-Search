@@ -1,4 +1,5 @@
-<!-- Bootstrap CSS CDN -->
+<?php echo '
+				<!-- Bootstrap CSS CDN -->
 			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
 					
@@ -13,10 +14,14 @@
 						color: white;
 					}
 					.searchBoxContainer{
-						font-family: 'Alegreya', serif; font-size: 18px;
+						font-family: "Alegreya", serif; font-size: 18px;
 					}
 					
 					.dropDownOption{ font-size:16px; }
+
+					body{
+						font-size:16px;
+					}
 
 				</style>
 				
@@ -30,11 +35,11 @@
 									<input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area"
 									autocomplete="off" style="margin:0px;">
 
-									<ul class="list-group hide" id="countryList" style="margin-top: 5px;">
+									<ul class="list-group hide" id="countryList" style="margin-top: 5px;margin-right: 5px;margin-left: 5px;">';?>
 										<?php
 
 											$servername = "localhost";
-											$username = "infotec";
+											$username = "givebirt_infotec";
 											$password = "encourageinfotech";
 											$dbname = "givebirt_infotec";
 		
@@ -69,18 +74,14 @@
 
 
 										?>
-										<!-- <li class="list-group-item"><b>Mumbai</b></li>
-										<li class="list-group-item"><b>Indore</b></li>
-										<li class="list-group-item"><b>Delhi</b></li>
-										<li class="list-group-item"><b>Rio de Janeiro</b></li> -->
-									</ul> 
+									<?php echo'</ul> 
 
 								</div>
 
 								<div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 5px;" >
 									<div class="form-group" style="margin: 0px;">
 										<select class="form-control dropDownOption" id="exampleFormControlSelect1" name="hotelType" style="padding:5px;height:35px">
-										  <option class="dropDownOption" value="Hotel Type - Any">Hotel Type - Any</option>
+										  <option class="dropDownOption" value="Hotel Type - Any">Hotel Type - Any</option>';?>
 										  <?php
 
 											if(mysqli_connect_error()){
@@ -102,7 +103,7 @@
 
 
 										  ?>
-										</select>
+										<?php echo '</select>
 									</div>
 								</div>
 
@@ -217,7 +218,7 @@
 								</div>
 
 								<div class="col-lg-2 col-md-12 col-sm-12" style="margin-top: 5px;">
-								  <button type="submit" class="btn btn-primary btn-block" style="background: #00bcd4; border: black; color: white; font-family: 'Alegreya', serif; font-size: 18px;"><b>Search</b></button>
+								  <button type="submit" class="btn btn-primary btn-block" style="background: #00bcd4; border: black; color: white; font-family: \'Alegreya\', serif; font-size: 20px;"><b>Search</b></button>
 								</div>
 
 
@@ -266,4 +267,4 @@
 
 				});
 
-				</script>
+				</script>';?>
