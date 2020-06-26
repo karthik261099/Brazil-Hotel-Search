@@ -33,7 +33,7 @@
 								<div class="col-lg-3 col-md-12 col-sm-12" style="margin-top: 5px;">
 
 									<input type="text" class="form-control" id="searchBox" name="location" placeholder="Search City, State or Area"
-									autocomplete="off" style="margin:0px;">
+									autocomplete="off" onkeyup="searchBoxKeyUp()" style="margin:0px;">
 
 									<ul class="list-group hide" id="countryList" style="margin-top: 5px;margin-right: 5px;margin-left: 5px;">';?>
 										<?php
@@ -42,6 +42,11 @@
 											$username = "givebirt_infotec";
 											$password = "encourageinfotech";
 											$dbname = "givebirt_infotec";
+
+											// $servername = "localhost";
+											// $username = "root";
+											// $password = "";
+											// $dbname = "brazil";
 		
 											$link=mysqli_connect($servername,$username,$password,$dbname);
 
@@ -56,7 +61,7 @@
 
 												while ($row=mysqli_fetch_array($result)) {
 													echo '
-														<li class="list-group-item"><b>'.$row['state'].'</b></li>
+														<li class="list-group-item" onclick="onListGroupItemClick()"><b>'.$row['state'].'</b></li>
 													';
 												}
 
@@ -66,7 +71,7 @@
 
 												while ($row=mysqli_fetch_array($result)) {
 													echo '
-														<li class="list-group-item"><b>'.$row['state'].', '.$row['city'].'</b></li>
+														<li class="list-group-item" onclick="onListGroupItemClick()"><b>'.$row['state'].', '.$row['city'].'</b></li>
 													';
 												}
 
@@ -108,8 +113,8 @@
 								</div>
 
 								<div class="col-lg-4 col-md-12 col-sm-12" style="margin-top: 5px;">
-									<div class="card">
-									  <div class="card-body accomodationCard" style="padding: 5px;">
+									<div class="card" style="cursor: pointer;">
+									  <div class="card-body accomodationCard" style="padding: 5px;" onclick="accomodationCardClicked()">
 										<b>
 											Add Filters
 										</b>
@@ -229,42 +234,47 @@
 					</div>
 				</div>
 				
-				<!-- jQuery CDN - Slim version (=without AJAX) -->
-				<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-				<!-- Popper.JS -->
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-				<!-- Bootstrap JS -->
-				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 				<script>
 
-				$(document).ready(function(){
+				function searchBoxKeyUp(){
+					document.querySelector("#countryList").classList.remove("hide");
+					var value = document.querySelector("#searchBox").value.toLowerCase();
 
-					$("#searchBox").on("keyup", function() {
-						$("#countryList").removeClass("hide");
+					if(value.length==0){
+						document.querySelector("#countryList").classList.add("hide");
+					}else{
+						var input, filter, ul, li, a, i, txtValue;
+						ul = document.getElementById("countryList");
+						li = ul.getElementsByTagName("li");
+						input = document.getElementById("searchBox");
+				  		filter = input.value.toLowerCase();
 
-						var value = $(this).val().toLowerCase();
+						for (i = 0; i < li.length; i++) {
+						    a = li[i];
+						    txtValue = a.textContent || a.innerText;
+						    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+						      li[i].style.display = "";
+						    } else {
+						      li[i].style.display = "none";
+						    }
+						  }
+					}
+				}
 
-						if(value.length==0){
-							$("#countryList").addClass("hide");
-						}else{
-							$("#countryList li").filter(function() {
-								$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-							});
-						}
+				const allItems= document.querySelectorAll(".list-group-item");
+				const display= document.querySelector("#searchBox");
+				allItems.forEach(item=>{
+					item.addEventListener("click", (event)=>{
+					display.value=event.target.textContent;
 					});
-
-					$(".list-group-item").on("click",function(){
-						$("#searchBox").val($(this).text());
-						$("#countryList").addClass("hide");
-						//$("#searchForm").submit();
-					});
-
-					$(".accomodationCard").on("click",function(){
-						$(".accomodationCardPopUP").toggleClass("hide");
-					});
-
-
 				});
+				function onListGroupItemClick(){
+					document.querySelector("#countryList").classList.add("hide");
+				}
+
+				function accomodationCardClicked(){
+					document.querySelector(".accomodationCardPopUP").classList.toggle("hide");
+				}
 
 				</script>';?>
